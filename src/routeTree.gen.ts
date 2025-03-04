@@ -86,6 +86,9 @@ const AuthenticatedCustomersCustomerCrudLazyImport = createFileRoute(
 const AuthenticatedBrandsCreateLazyImport = createFileRoute(
   '/_authenticated/brands/create',
 )()
+const AuthenticatedBrandsIdEditLazyImport = createFileRoute(
+  '/_authenticated/brands/$id/edit',
+)()
 
 // Create/Update Routes
 
@@ -369,6 +372,15 @@ const AuthenticatedBrandsCreateLazyRoute =
     import('./routes/_authenticated/brands/create.lazy').then((d) => d.Route),
   )
 
+const AuthenticatedBrandsIdEditLazyRoute =
+  AuthenticatedBrandsIdEditLazyImport.update({
+    id: '/brands/$id/edit',
+    path: '/brands/$id/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/brands/$id/edit.lazy').then((d) => d.Route),
+  )
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -597,6 +609,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/brands/$id/edit': {
+      id: '/_authenticated/brands/$id/edit'
+      path: '/brands/$id/edit'
+      fullPath: '/brands/$id/edit'
+      preLoaderRoute: typeof AuthenticatedBrandsIdEditLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
   }
 }
 
@@ -642,6 +661,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedProductsIndexLazyRoute: typeof AuthenticatedProductsIndexLazyRoute
   AuthenticatedTasksIndexLazyRoute: typeof AuthenticatedTasksIndexLazyRoute
   AuthenticatedUsersIndexLazyRoute: typeof AuthenticatedUsersIndexLazyRoute
+  AuthenticatedBrandsIdEditLazyRoute: typeof AuthenticatedBrandsIdEditLazyRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -661,6 +681,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedProductsIndexLazyRoute: AuthenticatedProductsIndexLazyRoute,
   AuthenticatedTasksIndexLazyRoute: AuthenticatedTasksIndexLazyRoute,
   AuthenticatedUsersIndexLazyRoute: AuthenticatedUsersIndexLazyRoute,
+  AuthenticatedBrandsIdEditLazyRoute: AuthenticatedBrandsIdEditLazyRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -698,6 +719,7 @@ export interface FileRoutesByFullPath {
   '/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/tasks': typeof AuthenticatedTasksIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
+  '/brands/$id/edit': typeof AuthenticatedBrandsIdEditLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -731,6 +753,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsIndexLazyRoute
   '/tasks': typeof AuthenticatedTasksIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
+  '/brands/$id/edit': typeof AuthenticatedBrandsIdEditLazyRoute
 }
 
 export interface FileRoutesById {
@@ -767,6 +790,7 @@ export interface FileRoutesById {
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexLazyRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexLazyRoute
+  '/_authenticated/brands/$id/edit': typeof AuthenticatedBrandsIdEditLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -803,6 +827,7 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/tasks'
     | '/users'
+    | '/brands/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
@@ -835,6 +860,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tasks'
     | '/users'
+    | '/brands/$id/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -869,6 +895,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
     | '/_authenticated/users/'
+    | '/_authenticated/brands/$id/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -947,7 +974,8 @@ export const routeTree = rootRoute
         "/_authenticated/product-carts/",
         "/_authenticated/products/",
         "/_authenticated/tasks/",
-        "/_authenticated/users/"
+        "/_authenticated/users/",
+        "/_authenticated/brands/$id/edit"
       ]
     },
     "/(auth)/500": {
@@ -1066,6 +1094,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/users/": {
       "filePath": "_authenticated/users/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/brands/$id/edit": {
+      "filePath": "_authenticated/brands/$id/edit.lazy.tsx",
       "parent": "/_authenticated"
     }
   }

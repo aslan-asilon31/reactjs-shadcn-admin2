@@ -13,6 +13,7 @@ interface ValidationErrors {
 
 // Skema validasi menggunakan Zod
 const brandSchema = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, 'Nama Brand harus diisi'),
 });
 
@@ -27,6 +28,8 @@ export default function BrandCreate() {
     setError(null);
     setValidationErrors({});
 
+  
+
     // Validate input
     const validationResult = brandSchema.safeParse({ name });
     if (!validationResult.success) {
@@ -38,19 +41,21 @@ export default function BrandCreate() {
       return;
     }
 
+    // Membuat slug dari name
+    const slug = name.toLowerCase().trim().replace(/\s+/g, '-');
+    
     // Create brand using the store
     try {
-      setLoading(true);
-      await useBrandStore.getState().createBrand(name);
+      await useBrandStore.getState().storeBrand(name, slug);
       setName('');
-      alert('Brand berhasil dibuat');
     } catch (err) {
-      setError('Gagal membuat brand');
       console.error(err);
     } finally {
-      setLoading(false);
+      console.log('');
     }
   };
+
+
 
   return (
     <div className="max-w-2xl px-6 py-16 mx-auto space-y-12">

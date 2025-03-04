@@ -65,8 +65,8 @@ export const sidebarData: SidebarData = {
           icon: IconChecklist,
         },
         {
-          title: 'Customers create',
-          url: '/customers/customerCrud',
+          title: 'Customers1',
+          url: '/customers1',
           icon: IconChecklist,
         },
         {
@@ -75,10 +75,11 @@ export const sidebarData: SidebarData = {
           icon: IconChecklist,
         },
         {
-          title: 'Brand create',
-          url: '/brands/create',
+          title: 'Brands Create',
+          url: '/brands/create/$id',
           icon: IconChecklist,
         },
+
         {
           title: 'Product Cart',
           url: '/product-carts',
@@ -89,6 +90,7 @@ export const sidebarData: SidebarData = {
           url: '/categories',
           icon: IconChecklist,
         },
+
         {
           title: 'Marketplaces',
           url: '/marketplaces',

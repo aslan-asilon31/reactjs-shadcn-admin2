@@ -32,7 +32,7 @@ const Customers: React.FC = () => {
           setLoading(true);
           setError(null);
           try {
-              const response = await axios.get('http://localhost:8004/api/customers');
+              const response = await axios.get('http://localhost:8001/api/customers');
               // Access the customer data correctly              
               const customerData = response.data.data.data; // Adjusted to access the array
               setCustomers(customerData);
@@ -74,7 +74,7 @@ const Customers: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.post('http://localhost:8004/api/customers/', newCustomer);
+        const response = await axios.post('http://localhost:8001/api/customers/', newCustomer);
         setCustomers([...customers, response.data.data]); // Assuming the response contains the created customer
         setNewCustomer({ name: '', balance: 0, is_activated: 1 }); // Reset form
         
@@ -93,7 +93,7 @@ const handleEditCustomer = async (customer: Customer) => {
 const handleUpdateCustomer = async () => {
     if (editingCustomer) {
         try {
-            const response = await axios.put(`http://localhost:8004/api/customers/${editingCustomer.id}`, newCustomer);
+            const response = await axios.put(`http://localhost:8001/api/customers/${editingCustomer.id}`, newCustomer);
             setCustomers(customers.map(c => (c.id === editingCustomer.id ? response.data.data : c))); // Update the customer in the list
             setEditingCustomer(null); // Clear editing state
             setNewCustomer({ name: '', balance: 0, is_activated: 1 }); // Reset form
@@ -105,7 +105,7 @@ const handleUpdateCustomer = async () => {
 
 const handleDeleteCustomer = async (id: string) => {
     try {
-        await axios.delete(`http://localhost:8004/api/customers/${id}`);
+        await axios.delete(`http://localhost:8001/api/customers/${id}`);
         setCustomers(customers.filter(customer => customer.id !== id)); // Remove the deleted customer from the list
     } catch (err) {
         setError('Failed to delete customer');

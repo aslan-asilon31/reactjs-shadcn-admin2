@@ -1,0 +1,113 @@
+// store.js  
+import axios from 'axios';
+import { create } from 'zustand';
+  
+
+interface Brand {
+  id: number;
+  name: string;
+}
+
+interface BrandStore {
+  brands: Brand[];
+  fetchBrands: () => Promise<void>;
+  storeBrand: (brands: Brand) => Promise<void>;
+  error: string | null;
+  selectedBrandId: string | null;
+  setSelectedBrandId: (id: string) => void;
+}
+
+const brandStore = create<BrandStore>((set) => ({
+  brands: [],  
+  loading: false,  
+  error: null,  
+  selectedBrandId: null,
+  setSelectedBrandId: (id) => set({ selectedBrandId: id }), // Mengatur id yang dipilih
+
+  fetchBrands: async () => {  
+    set({ loading: true });  
+    try {  
+        const response = await axios.get('http://localhost:8000/api/product-brands', {
+          params: {
+            limit: 9, 
+          },
+        });
+        set({ brands: response.data.data.data, loading: false });  
+    } catch (error) {  
+      set({ error: error.message, loading: false });  
+    }  
+  }, 
+  
+  fetchBrandById: async (brandId: number) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/product-brands/${brandId}`);
+      console.log(response.data);
+      return response.data; // Mengembalikan data brand
+    } catch (error) {
+      set({ error: error.message });
+      return null; // Mengembalikan null jika terjadi kesalahan
+    }
+  },
+  
+
+  storeBrand: async (name: string , slug: string) => {
+      alert(name); // Menampilkan nama brand untuk debugging
+      try {
+
+          // Mengirim permintaan POST menggunakan Fetch API
+          let resp = await fetch(`http://127.0.0.1:8000/api/product-brands/store`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name, slug }), // Mengubah objek menjadi string JSON
+          });
+
+          // Memeriksa apakah permintaan berhasil
+          if (resp.ok) { // Menggunakan resp.ok untuk memeriksa status
+              const data = await resp.json(); // Mengambil data dari respons
+              set((state) => ({ brands: [...state.brands, data] })); // Menambahkan produk ke state
+
+              // Menampilkan alert bahwa data berhasil dimasukkan
+              alert("Data berhasil dimasukkan!");
+          } else {
+              // Menangani kesalahan jika permintaan tidak berhasil
+              const errorData = await resp.json();
+              alert(`Error: ${errorData.message || "Terjadi kesalahan!"}`);
+          }
+      } catch (error) {
+          console.error("Error:", error);
+          alert("Terjadi kesalahan saat mengirim data!");
+      }
+  },
+
+  updateBrand: async (name,slug, id) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/product-brands/update/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name,slug }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update brand');
+      }
+      const data = await response.json();
+      // Update state or handle response as needed
+      set((state) => ({
+        brands: state.brands.map((brand) => (brand.id === id ? { ...brand, name, slug } : brand)),
+      }));
+    } catch (error) {
+      set({ error: error.message });
+    }
+  },
+
+  
+
+
+
+
+}));  
+  
+export default brandStore;  

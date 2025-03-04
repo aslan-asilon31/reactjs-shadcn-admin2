@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button"
 import useBrandStore from '@/stores/brandStore'
 import { useEffect, useState } from 'react'
 import BrandsProvider from './context/brands-context'
+import Swal from 'sweetalert2';
+
 
 interface Brand {
   id: number; 
@@ -14,8 +16,7 @@ interface Brand {
 }
 
 export default function BrandList() {
-  const { brands, error } = useBrandStore() as { brands: Brand; error: string | null };
-
+  const { brands, error, setSelectedBrandId,deleteBrand } = useBrandStore() as { brands: Brand; error: string | null };
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -25,10 +26,29 @@ export default function BrandList() {
     fetchBrands();
   }, [fetchBrands]);
 
+  const handleEdit = async (brandId: any) => {
+    setSelectedBrandId(brandId);
+    window.location.href = `/brands/${brandId}/edit/`;
+  };
 
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const handleDelete = async (brandId: number) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won’t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    });
+
+    if (result.isConfirmed) {
+      await deleteBrand(brandId);
+      Swal.fire('Deleted!', 'Your brand has been deleted.', 'success');
+    }
+  };
+  
+
 
   return (
     <BrandsProvider>
@@ -66,8 +86,8 @@ export default function BrandList() {
               <tr key={brand.id}>
                 <td>{brand.name}</td>
                 <td>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <button onClick={() => handleEdit(brand.id)}>Edit</button>
+                  <button onClick={() => handleDelete(brand.id)}>Delete</button>
                 </td>
               </tr>
             ))}
