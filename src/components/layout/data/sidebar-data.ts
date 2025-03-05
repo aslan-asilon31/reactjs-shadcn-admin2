@@ -21,7 +21,6 @@ import {
 } from '@tabler/icons-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
-
 export const sidebarData: SidebarData = {
   user: {
     name: 'aslanasilon',
@@ -74,12 +73,6 @@ export const sidebarData: SidebarData = {
           url: '/brands',
           icon: IconChecklist,
         },
-        {
-          title: 'Brands Create',
-          url: '/brands/create/$id',
-          icon: IconChecklist,
-        },
-
         {
           title: 'Product Cart',
           url: '/product-carts',

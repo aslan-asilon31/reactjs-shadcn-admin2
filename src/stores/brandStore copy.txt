@@ -1,7 +1,7 @@
 // store.js  
-import axios from 'axios';
 import { create } from 'zustand';
-  
+import Swal from 'sweetalert2';
+import API from '@/api/MainApi';
 
 interface Brand {
   id: number;
@@ -24,25 +24,43 @@ const brandStore = create<BrandStore>((set) => ({
   selectedBrandId: null,
   setSelectedBrandId: (id) => set({ selectedBrandId: id }), // Mengatur id yang dipilih
 
+
   fetchBrands: async () => {  
-    set({ loading: true });  
+    const loadingAlert = Swal.fire({
+      title: 'loading...',
+      text: 'Please wait while we load data.',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    
     try {  
-        const response = await axios.get('http://localhost:8000/api/product-brands', {
+        const response = await API.get('http://localhost:8000/api/product-brands', {
           params: {
             limit: 9, 
           },
         });
         set({ brands: response.data.data.data, loading: false });  
+        loadingAlert.close();
     } catch (error) {  
       set({ error: error.message, loading: false });  
+
+      loadingAlert.close();
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to load data. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
     }  
   }, 
   
-  fetchBrandById: async (brandId: number) => {
+  fetchBrandById: async (id: string) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/product-brands/${brandId}`);
-      console.log(response.data);
-      return response.data; // Mengembalikan data brand
+      const response = await API.get(`http://127.0.0.1:8000/api/product-brands/${id}`);
+      return response.data.data; // Mengembalikan data brand
     } catch (error) {
       set({ error: error.message });
       return null; // Mengembalikan null jika terjadi kesalahan
@@ -51,7 +69,17 @@ const brandStore = create<BrandStore>((set) => ({
   
 
   storeBrand: async (name: string , slug: string) => {
-      alert(name); // Menampilkan nama brand untuk debugging
+
+    const loadingAlert = Swal.fire({
+      title: 'Updating...',
+      text: 'Please wait while we update the brand.',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+
       try {
 
           // Mengirim permintaan POST menggunakan Fetch API
@@ -67,43 +95,122 @@ const brandStore = create<BrandStore>((set) => ({
           if (resp.ok) { // Menggunakan resp.ok untuk memeriksa status
               const data = await resp.json(); // Mengambil data dari respons
               set((state) => ({ brands: [...state.brands, data] })); // Menambahkan produk ke state
+              loadingAlert.close();
 
-              // Menampilkan alert bahwa data berhasil dimasukkan
-              alert("Data berhasil dimasukkan!");
+              Swal.fire({
+                title: 'Success!',
+                text: 'Brand updated successfully.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+              });
+
           } else {
               // Menangani kesalahan jika permintaan tidak berhasil
               const errorData = await resp.json();
-              alert(`Error: ${errorData.message || "Terjadi kesalahan!"}`);
           }
       } catch (error) {
           console.error("Error:", error);
-          alert("Terjadi kesalahan saat mengirim data!");
+          loadingAlert.close();
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to update brand. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
       }
   },
 
-  updateBrand: async (name,slug, id) => {
+  updateBrand: async (name: any,slug: any, id: number) => {
+    const loadingAlert = Swal.fire({
+      title: 'Updating...',
+      text: 'Please wait while we update the brand.',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/product-brands/update/${id}`, {
-        method: 'POST',
+      const response = await API.post(`http://127.0.0.1:8000/api/product-brands/update/${id}`,{
+        name,
+        slug
+      }, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name,slug }),
       });
-      if (!response.ok) {
+      
+      if (!response) {
         throw new Error('Failed to update brand');
       }
+
       const data = await response.json();
       // Update state or handle response as needed
       set((state) => ({
-        brands: state.brands.map((brand) => (brand.id === id ? { ...brand, name, slug } : brand)),
+        brands: state.brands.map((brand) => (brand.id === id ? { ...brand, name, slug,id } : brand)),
       }));
+
+      loadingAlert.close();
+
+      Swal.fire({
+        title: 'Success!',
+        text: 'Brand updated successfully.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+      
     } catch (error) {
       set({ error: error.message });
+      loadingAlert.close();
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to update brand. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
     }
   },
 
-  
+  deleteBrand: async (id: number) => {
+
+    const loadingAlert = Swal.fire({
+      title: 'Updating...',
+      text: 'Please wait while we update the brand.',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    
+    try {
+      await API.delete(`http://127.0.0.1:8000/api/product-brands/delete/${id}`);
+      set((state) => ({
+        brands: state.brands.filter((brand) => brand.id !== id),
+      }));
+
+
+      loadingAlert.close();
+
+      Swal.fire({
+        title: 'Success!',
+        text: 'Brand updated successfully.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+
+    } catch (error) {
+      set({ error: 'Failed to delete brand' });
+
+      loadingAlert.close();
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to update brand. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      
+    }
+  },
 
 
 

@@ -1,103 +1,101 @@
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
-import { Button } from "@/components/ui/button"
-import useBrandStore from '@/stores/brandStore'
-import { useEffect, useState } from 'react'
-import BrandsProvider from './context/brands-context'
-import Swal from 'sweetalert2';
+import React, { useEffect, useState } from 'react';
+import { Header } from '@/components/layout/header';
+import { Main } from '@/components/layout/main';
+import { ProfileDropdown } from '@/components/profile-dropdown';
+import { ThemeSwitch } from '@/components/theme-switch';
+import { Button } from "@/components/ui/button";
+import useBrandStore from '@/stores/brandStore';
 
+type ProductSearchSortOptions = 'newest' | 'oldest' | 'price';
 
-interface Brand {
-  id: number; 
-  name: string;
-}
+type ProductSearch = {
+  page: number;
+  filter: string;
+  createdBy: string;
+  sort: ProductSearchSortOptions;
+};
 
-export default function BrandList() {
-  const { brands, error, setSelectedBrandId,deleteBrand } = useBrandStore() as { brands: Brand; error: string | null };
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-
-  const fetchBrands = useBrandStore((state:any) => state.fetchBrands);
+const BrandList = () => {
+  const { brands, fetchBrands,fetchAdvanceSearch } = useBrandStore();
+  const [searchBrand, setSearchBrand] = useState('');
+  const [createdBy, setCreatedBy] = useState('');
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState<ProductSearchSortOptions>('newest');
 
   useEffect(() => {
+    // Fetch brands when the component mounts or when search parameters change
     fetchBrands();
-  }, [fetchBrands]);
+    // Update URL parameters
+    const params = new URLSearchParams(window.location.search);
+    params.set('filter', searchBrand);
+    params.set('created_by', createdBy);
+    params.set('page', page.toString());
+    params.set('sort', sort);
+    window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+  }, [searchBrand, createdBy, page, sort, fetchBrands]);
 
-  const handleEdit = async (brandId: any) => {
-    setSelectedBrandId(brandId);
-    window.location.href = `/brands/${brandId}/edit/`;
-  };
-
-
-  const handleDelete = async (brandId: number) => {
-    const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: 'You won’t be able to revert this!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
-    });
-
-    if (result.isConfirmed) {
-      await deleteBrand(brandId);
-      Swal.fire('Deleted!', 'Your brand has been deleted.', 'success');
-    }
+  const handleSearch = () => {
+    const searchParams = {
+      filter: searchBrand,
+      created_by: createdBy,
+      page: page,
+      sort: 9, // Assuming you have a sort option state
+    };
+  
+    fetchAdvanceSearch(searchParams.filter, searchParams.created_by, searchParams.page, searchParams.sort);
   };
   
 
+  const handleSortChange = (newSort: ProductSearchSortOptions) => {
+    setSort(newSort);
+  };
 
   return (
-    <BrandsProvider>
-      <Header fixed>
-        <Search />
-        <div className='ml-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <ProfileDropdown />
-        </div>
+    <div>
+      <Header>
+        <ProfileDropdown />
+        <ThemeSwitch />
       </Header>
-
       <Main>
-        <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
-          <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Brand List</h2>
-            <p className='text-muted-foreground'>
-              Manage your Brands and their roles here.
-            </p>
-          </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Search brand..."
+            value={searchBrand}
+            onChange={(e) => setSearchBrand(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Created by..."
+            value={createdBy}
+            onChange={(e) => setCreatedBy(e.target.value)}
+          />
+          <Button onClick={handleSearch}>Search</Button>
         </div>
-        <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-                <Button onClick={() => window.location.href = '/brands/create'} className="text-white p-2 rounded">
-                    Add brand
-                </Button>
-        <h1>Daftar brand</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Nama brand</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(brands) && brands.map((brand) => (
-              <tr key={brand.id}>
-                <td>{brand.name}</td>
-                <td>
-                  <button onClick={() => handleEdit(brand.id)}>Edit</button>
-                  <button onClick={() => handleDelete(brand.id)}>Delete</button>
-                </td>
-              </tr>
+        <div>
+          <label>Sort by:</label>
+          <select value={sort} onChange={(e) => handleSortChange(e.target.value as ProductSearchSortOptions)}>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="price">Price</option>
+          </select>
+        </div>
+        <div>
+          <h1>Brand List</h1>
+          <ul>
+            {brands.map((brand) => (
+              <li key={brand.id}>{brand.name} - Created by: {brand.created_by}</li>
             ))}
-          </tbody>
-        </table>
-
-          {/* <BrandsTable data={brandList} columns={columns} /> */}
+          </ul>
+        </div>
+        <div>
+          <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))}>Previous</button>
+          <span>Page {page}</span>
+          <button onClick={() => setPage((prev) => prev + 1)}>Next</button>
         </div>
       </Main>
+    </div>
+  );
+};
 
-    </BrandsProvider>
-  )
-}
+export default BrandList;

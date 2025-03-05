@@ -1,131 +1,44 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { createFileRoute, useSearch } from '@tanstack/react-router';
+import { z } from 'zod';
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-}
+// Define sorting options for product search
+type ProductSearchSortOptions = 'newest' | 'oldest' | 'price';
 
-export default function ProductCartList() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [formData, setFormData] = useState<Product | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
+// Define type for product cart search parameters
+type ProductCartSearch = {
+  page: number;
+  filter: string;
+  sort: ProductSearchSortOptions;
+};
 
-  // Fetch products from API
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await axios.get('https://fakestoreapi.com/products');
-      setProducts(response.data);
-    };
-    fetchProducts();
-  }, []);
+// Define validation schema using Zod
+const productCartSearchSchema = z.object({
+  page: z.number().default(1), // Default to page 1
+  filter: z.string().default(''), // Default to an empty string
+  sort: z.enum(['newest', 'oldest', 'price']).default('newest'), // Sort options
+});
 
-  // Handle form input changes
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev!,
-      [name]: name === 'price' ? parseFloat(value) : value,
-    }));
-  };
+// Create the route for product carts
+export const productCartsRoute = createFileRoute('/product-carts')({
+  validateSearch: (search: Record<string, unknown>): ProductCartSearch => {
+    // Validate and parse the search params into a typed state
+    return productCartSearchSchema.parse(search);
+  },
+});
 
-  // Handle form submission for creating or updating a product
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isEditing && formData) {
-      // Update product
-      await axios.put(`https://fakestoreapi.com/products/${formData.id}`, formData);
-    } else {
-      // Create new product
-      await axios.post('https://fakestoreapi.com/products', formData);
-    }
-    setFormData(null);
-    setIsEditing(false);
-    // Refresh product list
-    const response = await axios.get('https://fakestoreapi.com/products');
-    setProducts(response.data);
-  };
-
-  // Handle edit button click
-  const handleEdit = (product: Product) => {
-    setFormData(product);
-    setIsEditing(true);
-  };
-
-  // Handle delete button click
-  const handleDelete = async (id: number) => {
-    await axios.delete(`https://fakestoreapi.com/products/${id}`);
-    // Refresh product list
-    const response = await axios.get('https://fakestoreapi.com/products');
-    setProducts(response.data);
-  };
+// Example component to display product cart search parameters
+const ProductCarts = () => {
+  const search = useSearch<ProductCartSearch>();
 
   return (
     <div>
-      <h1>Product Cart List</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Product Title"
-          value={formData?.title || ''}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Product Price"
-          value={formData?.price || ''}
-          onChange={handleInputChange}
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Product Description"
-          value={formData?.description || ''}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Product Category"
-          value={formData?.category || ''}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="text"
-          name="image"
-          placeholder="Product Image URL"
-          value={formData?.image || ''}
-          onChange={handleInputChange}
-          required
-        />
-        <button type="submit">{isEditing ? 'Update Product' : 'Add Product'}</button>
-      </form>
-
-      <h2>Product List</h2>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <h3>{product.title}</h3>
-            <p>Price: ${product.price}</p>
-            <p>{product.description}</p>
-            <button onClick={() => handleEdit(product)}>Edit</button>
-            <button onClick={() => handleDelete(product.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <h1>Product Carts</h1>
+      <p>Page: {search.page}</p>
+      <p>Filter: {search.filter}</p>
+      <p>Sort: {search.sort}</p>
     </div>
   );
-}
+};
+
+export default ProductCarts;

@@ -1,8 +1,8 @@
 // store.js  
-import axios from 'axios';
 import { create } from 'zustand';
 import Swal from 'sweetalert2';
-  
+import API from '@/api/MainApi';
+import { z } from 'zod'
 
 interface Brand {
   id: number;
@@ -12,6 +12,7 @@ interface Brand {
 interface BrandStore {
   brands: Brand[];
   fetchBrands: () => Promise<void>;
+  fetchAdvanceSearch: (filter: string, created_by: string, page: number, sort: string) => Promise<void>;
   storeBrand: (brands: Brand) => Promise<void>;
   error: string | null;
   selectedBrandId: string | null;
@@ -26,30 +27,29 @@ const brandStore = create<BrandStore>((set) => ({
   setSelectedBrandId: (id) => set({ selectedBrandId: id }), // Mengatur id yang dipilih
 
 
-
-
   fetchBrands: async () => {  
-    const loadingAlert = Swal.fire({
-      title: 'loading...',
-      text: 'Please wait while we load data.',
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      },
-    });
+    // const loadingAlert = Swal.fire({
+    //   title: 'loading...',
+    //   text: 'Please wait while we load data.',
+    //   allowOutsideClick: false,
+    //   showConfirmButton: false,
+    //   onBeforeOpen: () => {
+    //     Swal.showLoading();
+    //   },
+    // });
     
     try {  
-        const response = await axios.get('http://localhost:8000/api/product-brands', {
+        const response = await API.get('http://localhost:8000/api/product-brands', {
           params: {
             limit: 9, 
           },
         });
         set({ brands: response.data.data.data, loading: false });  
-        loadingAlert.close();
+        // loadingAlert.close();
     } catch (error) {  
       set({ error: error.message, loading: false });  
 
-      loadingAlert.close();
+      // loadingAlert.close();
       Swal.fire({
         title: 'Error!',
         text: 'Failed to load data. Please try again.',
@@ -61,11 +61,30 @@ const brandStore = create<BrandStore>((set) => ({
   
   fetchBrandById: async (id: string) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/product-brands/${id}`);
+      const response = await API.get(`http://127.0.0.1:8000/api/product-brands/${id}`);
       return response.data.data; // Mengembalikan data brand
     } catch (error) {
       set({ error: error.message });
       return null; // Mengembalikan null jika terjadi kesalahan
+    }
+  },
+
+  fetchAdvanceSearch: async (filter: string, created_by: string, page: number, sort: string) => {
+    try {
+      const response = await API.get('http://127.0.0.1:8000/api/product-brands', {
+        params: {
+          filter: filter,
+          created_by: created_by,
+          page: page,
+          sort: sort,
+        },
+      });
+      set({ brands: response.data.data.data, loading: false });
+      alert(response.data.data.data) ;
+      console.log(response.data.data.data) ;
+    } catch (error) {
+      set({ error: error.message });
+      Swal.fire('Error', 'Failed to fetch brands with search parameters', 'error');
     }
   },
   
@@ -133,7 +152,7 @@ const brandStore = create<BrandStore>((set) => ({
     });
 
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/product-brands/update/${id}`,{
+      const response = await API.post(`http://127.0.0.1:8000/api/product-brands/update/${id}`,{
         name,
         slug
       }, {
@@ -185,7 +204,7 @@ const brandStore = create<BrandStore>((set) => ({
     });
     
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/product-brands/delete/${id}`);
+      await API.delete(`http://127.0.0.1:8000/api/product-brands/delete/${id}`);
       set((state) => ({
         brands: state.brands.filter((brand) => brand.id !== id),
       }));
