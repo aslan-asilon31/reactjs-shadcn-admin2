@@ -23,6 +23,7 @@ const BrandEdit = () => {
     resolver: zodResolver(brandSchema),
   });
   const [loading, setLoading] = useState(false);
+  const deleteBrand = useBrandStore((state) => state.deleteBrand); // Mengambil fungsi updateBrand dari Zustand
   const updateBrand = useBrandStore((state) => state.updateBrand); // Mengambil fungsi updateBrand dari Zustand
   const fetchBrandById = useBrandStore((state) => state.fetchBrandById); // Mengambil fungsi updateBrand dari Zustand
 
@@ -82,13 +83,42 @@ const BrandEdit = () => {
     }
   };
 
+
+
+  const handleDelete = async (id: number) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won’t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    });
+
+    if (result.isConfirmed) {
+      await deleteBrand(id);
+      window.location.href = `/brands/`;
+
+    }
+  };
+
+
+  
   return (
     <div>
 
-
         <div className=" mx-auto p-6 bg-white rounded-lg shadow-md">
           <h1 className="text-2xl font-bold mb-6 text-center">Edit Brand</h1>
-          
+          <a
+              href="#"
+              className="w-sm text-left p-4 bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-red-700 transition duration-200"
+              onClick={(e) => {
+                e.preventDefault(); // Mencegah navigasi
+                handleDelete(id!); // Panggil fungsi handleDelete
+              }}
+            >
+              Delete
+          </a>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
@@ -107,6 +137,8 @@ const BrandEdit = () => {
             >
               {loading ? <span>Loading...</span> : 'Update Brand'}
             </button>
+
+
           </form>
         </div>
 

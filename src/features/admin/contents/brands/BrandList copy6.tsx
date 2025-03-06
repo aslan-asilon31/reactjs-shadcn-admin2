@@ -33,11 +33,11 @@ export default function BrandList() {
 
   // Set data from brands
   useEffect(() => {
-    return setData(brands);
+    setData(brands);
   }, [brands]);
 
   // Define columns with filter functionality
-  const columns =  [
+  const columns = [
     {
       accessorKey: 'id', // Accessor for the column
       header: 'ID',
@@ -118,16 +118,7 @@ export default function BrandList() {
                 <th key={header.id}>
                   {flexRender(header.column.columnDef.header, header.getContext())}
                   <div>
-
-
                   <Input
-                  placeholder={`Filter ${header.column.columnDef.header}`}
-                  value={header.getFilterValue || ''}
-                  onChange={e => header.setFilterValue(e.target.value)}
-                />
-                
-
-                  {/* <Input
                       placeholder='Filter name...'
                       value={
                         (table.getColumn('name')?.getFilterValue() as string) ?? ''
@@ -136,12 +127,27 @@ export default function BrandList() {
                         table.getColumn('name')?.setFilterValue(event.target.value)
                       }
                       className='h-8 w-[150px] lg:w-[250px]'
-                    /> */}
-                  {/* <Input
-                      placeholder={`Filter ${header.column.columnDef.header}...`}
-                      value={header.getFilterValue() || ''} // Get current filter value
-                      onChange={e => header.setFilterValue(e.target.value)} // Update filter value
-                    /> */}
+                    />
+                  <Input
+                      placeholder='Filter slug...'
+                      value={
+                        (table.getColumn('slug')?.getFilterValue() as string) ?? ''
+                      }
+                      onChange={(event) =>
+                        table.getColumn('slug')?.setFilterValue(event.target.value)
+                      }
+                      className='h-8 w-[150px] lg:w-[250px]'
+                    />
+                  <Input
+                      placeholder='Filter is_activated...'
+                      value={
+                        (table.getColumn('is_activated')?.getFilterValue() as string) ?? ''
+                      }
+                      onChange={(event) =>
+                        table.getColumn('is_activated')?.setFilterValue(event.target.value)
+                      }
+                      className='h-8 w-[150px] lg:w-[250px]'
+                    />
                   </div>
                 </th>
               ))}

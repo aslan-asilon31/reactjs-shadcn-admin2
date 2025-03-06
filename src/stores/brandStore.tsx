@@ -71,7 +71,8 @@ const brandStore = create<BrandStore>((set) => ({
 
   fetchAdvanceSearch: async (filter: string, created_by: string, page: number, sort: string) => {
     try {
-      const response = await API.get('http://127.0.0.1:8000/api/product-brands', {
+
+      const response = await API.get('http://127.0.0.1:8000/api/product-brands-advanced/', {
         params: {
           filter: filter,
           created_by: created_by,
@@ -80,8 +81,6 @@ const brandStore = create<BrandStore>((set) => ({
         },
       });
       set({ brands: response.data.data.data, loading: false });
-      alert(response.data.data.data) ;
-      console.log(response.data.data.data) ;
     } catch (error) {
       set({ error: error.message });
       Swal.fire('Error', 'Failed to fetch brands with search parameters', 'error');
