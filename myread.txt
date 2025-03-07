@@ -1,1 +1,9 @@
-https://www.dicoding.com/blog/dengan-react-query-data-fetching-tidak-lagi-pusing/
+https://react-table-library.com/?path=/docs/compact-table--select
+
+https://www.material-react-table.com/docs/getting-started/install
+
+https://react-data-table-component.netlify.app/?path=/docs/performance-examples-hook-component--docs
+
+https://datatables.net/examples/layout/positioning.html
+
+https://primereact.org/datatable/

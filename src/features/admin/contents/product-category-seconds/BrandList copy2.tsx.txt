@@ -1,0 +1,130 @@
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
+import { ThemeSwitch } from '@/components/theme-switch'
+import { Button } from "@/components/ui/button"
+import useBrandStore from '@/stores/brandStore'
+import { useEffect, useState } from 'react'
+import BrandsProvider from './context/brands-context'
+import Swal from 'sweetalert2';
+import { Link } from '@tanstack/react-router';
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+} from "@tanstack/react-table";
+interface Brand {
+  id: number; 
+  name: string;
+}
+
+
+
+export default function BrandList() {
+  const { brands, error, setSelectedBrandId,deleteBrand } = useBrandStore() as { brands: Brand; error: string | null };
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const fetchBrands = useBrandStore((state:any) => state.fetchBrands);
+
+ 
+
+
+  useEffect(() => {
+    fetchBrands();
+  }, [fetchBrands]);
+
+  const handleEdit = async (brandId: any) => {
+    setSelectedBrandId(brandId);
+    window.location.href = `/brands/${brandId}/edit/`;
+  };
+
+
+  const handleDelete = async (brandId: number) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won’t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    });
+
+    if (result.isConfirmed) {
+      await deleteBrand(brandId);
+      Swal.fire('Deleted!', 'Your brand has been deleted.', 'success');
+    }
+  };
+  
+
+
+  const handleSearch = () => {
+  
+  };
+
+
+  return (
+    <BrandsProvider>
+      <Header fixed>
+        <Search />
+        <div className='ml-auto flex items-center space-x-4'>
+          <ThemeSwitch />
+          <ProfileDropdown />
+        </div>
+      </Header>
+
+      <Main>
+        <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
+          <div>
+            <h2 className='text-2xl font-bold tracking-tight'>Brand List</h2>
+            <p className='text-muted-foreground'>
+              Manage your Brands and their roles here.
+            </p>
+          </div>
+        </div>
+        <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
+                <Button onClick={() => window.location.href = '/brands/create'} className="text-white p-2 rounded">
+                    Add brand
+                </Button>
+                <Button>
+                <Link
+                  to="/shop"
+                    search={{
+                      pageIndex: 3,
+                      includeCategories: ['electronics', 'gifts'],
+                      sortBy: 'price',
+                      desc: true,
+                    }}
+                  />
+                </Button>
+        <h1>Daftar brand</h1>
+
+
+
+        <table>
+          <thead>
+            <tr>
+              <th>Nama brand</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(brands) && brands.map((brand) => (
+              <tr key={brand.id}>
+                <td>{brand.name}</td>
+                <td>
+                  <button onClick={() => handleEdit(brand.id)}>Edit</button>
+                  <button onClick={() => handleDelete(brand.id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+          {/* <BrandsTable data={brandList} columns={columns} /> */}
+        </div>
+      </Main>
+
+    </BrandsProvider>
+  )
+}

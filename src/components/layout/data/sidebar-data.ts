@@ -29,7 +29,7 @@ export const sidebarData: SidebarData = {
   },
   teams: [
     {
-      name: 'Shadcn Admin',
+      name: 'Shadcn1',
       logo: Command,
       plan: 'Vite + ShadcnUI AslanAsilon',
     },
@@ -59,15 +59,36 @@ export const sidebarData: SidebarData = {
           icon: IconChecklist,
         },
         {
+          title: 'Product Contents',
+          url: '/product-contents',
+          icon: IconChecklist,
+        },
+        {
+          title: 'Product Content Displays',
+          url: '/product-content-displays',
+          icon: IconChecklist,
+        },
+        {
+          title: 'Product Content Features',
+          url: '/product-content-features',
+          icon: IconChecklist,
+        },
+        {
+          title: 'Product Category Firsts',
+          url: '/product-category-firsts',
+          icon: IconChecklist,
+        },
+        {
+          title: 'Product Category Seconds',
+          url: '/product-category-seconds',
+          icon: IconChecklist,
+        },
+        {
           title: 'Customers',
           url: '/customers',
           icon: IconChecklist,
         },
-        {
-          title: 'Customers1',
-          url: '/customers1',
-          icon: IconChecklist,
-        },
+     
         {
           title: 'Brands',
           url: '/brands',

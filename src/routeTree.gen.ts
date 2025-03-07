@@ -47,6 +47,24 @@ const AuthenticatedSettingsIndexLazyImport = createFileRoute(
 const AuthenticatedProductsIndexLazyImport = createFileRoute(
   '/_authenticated/products/',
 )()
+const AuthenticatedProductContentsIndexLazyImport = createFileRoute(
+  '/_authenticated/product-contents/',
+)()
+const AuthenticatedProductContentFeaturesIndexLazyImport = createFileRoute(
+  '/_authenticated/product-content-features/',
+)()
+const AuthenticatedProductContentDisplaysIndexLazyImport = createFileRoute(
+  '/_authenticated/product-content-displays/',
+)()
+const AuthenticatedProductContentDetailsIndexLazyImport = createFileRoute(
+  '/_authenticated/product-content-details/',
+)()
+const AuthenticatedProductCategorySecondsIndexLazyImport = createFileRoute(
+  '/_authenticated/product-category-seconds/',
+)()
+const AuthenticatedProductCategoryFirstsIndexLazyImport = createFileRoute(
+  '/_authenticated/product-category-firsts/',
+)()
 const AuthenticatedProductCartsIndexLazyImport = createFileRoute(
   '/_authenticated/product-carts/',
 )()
@@ -80,11 +98,47 @@ const AuthenticatedSettingsAppearanceLazyImport = createFileRoute(
 const AuthenticatedSettingsAccountLazyImport = createFileRoute(
   '/_authenticated/settings/account',
 )()
+const AuthenticatedProductContentsCreateLazyImport = createFileRoute(
+  '/_authenticated/product-contents/create',
+)()
+const AuthenticatedProductContentFeaturesCreateLazyImport = createFileRoute(
+  '/_authenticated/product-content-features/create',
+)()
+const AuthenticatedProductContentDisplaysCreateLazyImport = createFileRoute(
+  '/_authenticated/product-content-displays/create',
+)()
+const AuthenticatedProductContentDetailsCreateLazyImport = createFileRoute(
+  '/_authenticated/product-content-details/create',
+)()
+const AuthenticatedProductCategorySecondsCreateLazyImport = createFileRoute(
+  '/_authenticated/product-category-seconds/create',
+)()
+const AuthenticatedProductCategoryFirstsCreateLazyImport = createFileRoute(
+  '/_authenticated/product-category-firsts/create',
+)()
 const AuthenticatedCustomersCustomerCrudLazyImport = createFileRoute(
   '/_authenticated/customers/customerCrud',
 )()
 const AuthenticatedBrandsCreateLazyImport = createFileRoute(
   '/_authenticated/brands/create',
+)()
+const AuthenticatedProductContentsIdEditLazyImport = createFileRoute(
+  '/_authenticated/product-contents/$id/edit',
+)()
+const AuthenticatedProductContentFeaturesIdEditLazyImport = createFileRoute(
+  '/_authenticated/product-content-features/$id/edit',
+)()
+const AuthenticatedProductContentDisplaysIdEditLazyImport = createFileRoute(
+  '/_authenticated/product-content-displays/$id/edit',
+)()
+const AuthenticatedProductContentDetailsIdEditLazyImport = createFileRoute(
+  '/_authenticated/product-content-details/$id/edit',
+)()
+const AuthenticatedProductCategorySecondsIdEditLazyImport = createFileRoute(
+  '/_authenticated/product-category-seconds/$id/edit',
+)()
+const AuthenticatedProductCategoryFirstsIdEditLazyImport = createFileRoute(
+  '/_authenticated/product-category-firsts/$id/edit',
 )()
 const AuthenticatedBrandsIdEditLazyImport = createFileRoute(
   '/_authenticated/brands/$id/edit',
@@ -238,6 +292,72 @@ const AuthenticatedProductsIndexLazyRoute =
     import('./routes/_authenticated/products/index.lazy').then((d) => d.Route),
   )
 
+const AuthenticatedProductContentsIndexLazyRoute =
+  AuthenticatedProductContentsIndexLazyImport.update({
+    id: '/product-contents/',
+    path: '/product-contents/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-contents/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductContentFeaturesIndexLazyRoute =
+  AuthenticatedProductContentFeaturesIndexLazyImport.update({
+    id: '/product-content-features/',
+    path: '/product-content-features/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-content-features/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductContentDisplaysIndexLazyRoute =
+  AuthenticatedProductContentDisplaysIndexLazyImport.update({
+    id: '/product-content-displays/',
+    path: '/product-content-displays/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-content-displays/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductContentDetailsIndexLazyRoute =
+  AuthenticatedProductContentDetailsIndexLazyImport.update({
+    id: '/product-content-details/',
+    path: '/product-content-details/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-content-details/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductCategorySecondsIndexLazyRoute =
+  AuthenticatedProductCategorySecondsIndexLazyImport.update({
+    id: '/product-category-seconds/',
+    path: '/product-category-seconds/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-category-seconds/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductCategoryFirstsIndexLazyRoute =
+  AuthenticatedProductCategoryFirstsIndexLazyImport.update({
+    id: '/product-category-firsts/',
+    path: '/product-category-firsts/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-category-firsts/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
 const AuthenticatedProductCartsIndexLazyRoute =
   AuthenticatedProductCartsIndexLazyImport.update({
     id: '/product-carts/',
@@ -352,6 +472,72 @@ const AuthenticatedSettingsAccountLazyRoute =
     ),
   )
 
+const AuthenticatedProductContentsCreateLazyRoute =
+  AuthenticatedProductContentsCreateLazyImport.update({
+    id: '/product-contents/create',
+    path: '/product-contents/create',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-contents/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductContentFeaturesCreateLazyRoute =
+  AuthenticatedProductContentFeaturesCreateLazyImport.update({
+    id: '/product-content-features/create',
+    path: '/product-content-features/create',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-content-features/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductContentDisplaysCreateLazyRoute =
+  AuthenticatedProductContentDisplaysCreateLazyImport.update({
+    id: '/product-content-displays/create',
+    path: '/product-content-displays/create',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-content-displays/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductContentDetailsCreateLazyRoute =
+  AuthenticatedProductContentDetailsCreateLazyImport.update({
+    id: '/product-content-details/create',
+    path: '/product-content-details/create',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-content-details/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductCategorySecondsCreateLazyRoute =
+  AuthenticatedProductCategorySecondsCreateLazyImport.update({
+    id: '/product-category-seconds/create',
+    path: '/product-category-seconds/create',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-category-seconds/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductCategoryFirstsCreateLazyRoute =
+  AuthenticatedProductCategoryFirstsCreateLazyImport.update({
+    id: '/product-category-firsts/create',
+    path: '/product-category-firsts/create',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-category-firsts/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
 const AuthenticatedCustomersCustomerCrudLazyRoute =
   AuthenticatedCustomersCustomerCrudLazyImport.update({
     id: '/customers/customerCrud',
@@ -370,6 +556,72 @@ const AuthenticatedBrandsCreateLazyRoute =
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any).lazy(() =>
     import('./routes/_authenticated/brands/create.lazy').then((d) => d.Route),
+  )
+
+const AuthenticatedProductContentsIdEditLazyRoute =
+  AuthenticatedProductContentsIdEditLazyImport.update({
+    id: '/product-contents/$id/edit',
+    path: '/product-contents/$id/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/product-contents/$id/edit.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedProductContentFeaturesIdEditLazyRoute =
+  AuthenticatedProductContentFeaturesIdEditLazyImport.update({
+    id: '/product-content-features/$id/edit',
+    path: '/product-content-features/$id/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_authenticated/product-content-features/$id/edit.lazy'
+    ).then((d) => d.Route),
+  )
+
+const AuthenticatedProductContentDisplaysIdEditLazyRoute =
+  AuthenticatedProductContentDisplaysIdEditLazyImport.update({
+    id: '/product-content-displays/$id/edit',
+    path: '/product-content-displays/$id/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_authenticated/product-content-displays/$id/edit.lazy'
+    ).then((d) => d.Route),
+  )
+
+const AuthenticatedProductContentDetailsIdEditLazyRoute =
+  AuthenticatedProductContentDetailsIdEditLazyImport.update({
+    id: '/product-content-details/$id/edit',
+    path: '/product-content-details/$id/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_authenticated/product-content-details/$id/edit.lazy'
+    ).then((d) => d.Route),
+  )
+
+const AuthenticatedProductCategorySecondsIdEditLazyRoute =
+  AuthenticatedProductCategorySecondsIdEditLazyImport.update({
+    id: '/product-category-seconds/$id/edit',
+    path: '/product-category-seconds/$id/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_authenticated/product-category-seconds/$id/edit.lazy'
+    ).then((d) => d.Route),
+  )
+
+const AuthenticatedProductCategoryFirstsIdEditLazyRoute =
+  AuthenticatedProductCategoryFirstsIdEditLazyImport.update({
+    id: '/product-category-firsts/$id/edit',
+    path: '/product-category-firsts/$id/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_authenticated/product-category-firsts/$id/edit.lazy'
+    ).then((d) => d.Route),
   )
 
 const AuthenticatedBrandsIdEditLazyRoute =
@@ -504,6 +756,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCustomersCustomerCrudLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/product-category-firsts/create': {
+      id: '/_authenticated/product-category-firsts/create'
+      path: '/product-category-firsts/create'
+      fullPath: '/product-category-firsts/create'
+      preLoaderRoute: typeof AuthenticatedProductCategoryFirstsCreateLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-category-seconds/create': {
+      id: '/_authenticated/product-category-seconds/create'
+      path: '/product-category-seconds/create'
+      fullPath: '/product-category-seconds/create'
+      preLoaderRoute: typeof AuthenticatedProductCategorySecondsCreateLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-details/create': {
+      id: '/_authenticated/product-content-details/create'
+      path: '/product-content-details/create'
+      fullPath: '/product-content-details/create'
+      preLoaderRoute: typeof AuthenticatedProductContentDetailsCreateLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-displays/create': {
+      id: '/_authenticated/product-content-displays/create'
+      path: '/product-content-displays/create'
+      fullPath: '/product-content-displays/create'
+      preLoaderRoute: typeof AuthenticatedProductContentDisplaysCreateLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-features/create': {
+      id: '/_authenticated/product-content-features/create'
+      path: '/product-content-features/create'
+      fullPath: '/product-content-features/create'
+      preLoaderRoute: typeof AuthenticatedProductContentFeaturesCreateLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-contents/create': {
+      id: '/_authenticated/product-contents/create'
+      path: '/product-contents/create'
+      fullPath: '/product-contents/create'
+      preLoaderRoute: typeof AuthenticatedProductContentsCreateLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
     '/_authenticated/settings/account': {
       id: '/_authenticated/settings/account'
       path: '/account'
@@ -581,6 +875,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProductCartsIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/product-category-firsts/': {
+      id: '/_authenticated/product-category-firsts/'
+      path: '/product-category-firsts'
+      fullPath: '/product-category-firsts'
+      preLoaderRoute: typeof AuthenticatedProductCategoryFirstsIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-category-seconds/': {
+      id: '/_authenticated/product-category-seconds/'
+      path: '/product-category-seconds'
+      fullPath: '/product-category-seconds'
+      preLoaderRoute: typeof AuthenticatedProductCategorySecondsIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-details/': {
+      id: '/_authenticated/product-content-details/'
+      path: '/product-content-details'
+      fullPath: '/product-content-details'
+      preLoaderRoute: typeof AuthenticatedProductContentDetailsIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-displays/': {
+      id: '/_authenticated/product-content-displays/'
+      path: '/product-content-displays'
+      fullPath: '/product-content-displays'
+      preLoaderRoute: typeof AuthenticatedProductContentDisplaysIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-features/': {
+      id: '/_authenticated/product-content-features/'
+      path: '/product-content-features'
+      fullPath: '/product-content-features'
+      preLoaderRoute: typeof AuthenticatedProductContentFeaturesIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-contents/': {
+      id: '/_authenticated/product-contents/'
+      path: '/product-contents'
+      fullPath: '/product-contents'
+      preLoaderRoute: typeof AuthenticatedProductContentsIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
     '/_authenticated/products/': {
       id: '/_authenticated/products/'
       path: '/products'
@@ -614,6 +950,48 @@ declare module '@tanstack/react-router' {
       path: '/brands/$id/edit'
       fullPath: '/brands/$id/edit'
       preLoaderRoute: typeof AuthenticatedBrandsIdEditLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-category-firsts/$id/edit': {
+      id: '/_authenticated/product-category-firsts/$id/edit'
+      path: '/product-category-firsts/$id/edit'
+      fullPath: '/product-category-firsts/$id/edit'
+      preLoaderRoute: typeof AuthenticatedProductCategoryFirstsIdEditLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-category-seconds/$id/edit': {
+      id: '/_authenticated/product-category-seconds/$id/edit'
+      path: '/product-category-seconds/$id/edit'
+      fullPath: '/product-category-seconds/$id/edit'
+      preLoaderRoute: typeof AuthenticatedProductCategorySecondsIdEditLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-details/$id/edit': {
+      id: '/_authenticated/product-content-details/$id/edit'
+      path: '/product-content-details/$id/edit'
+      fullPath: '/product-content-details/$id/edit'
+      preLoaderRoute: typeof AuthenticatedProductContentDetailsIdEditLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-displays/$id/edit': {
+      id: '/_authenticated/product-content-displays/$id/edit'
+      path: '/product-content-displays/$id/edit'
+      fullPath: '/product-content-displays/$id/edit'
+      preLoaderRoute: typeof AuthenticatedProductContentDisplaysIdEditLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-content-features/$id/edit': {
+      id: '/_authenticated/product-content-features/$id/edit'
+      path: '/product-content-features/$id/edit'
+      fullPath: '/product-content-features/$id/edit'
+      preLoaderRoute: typeof AuthenticatedProductContentFeaturesIdEditLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/product-contents/$id/edit': {
+      id: '/_authenticated/product-contents/$id/edit'
+      path: '/product-contents/$id/edit'
+      fullPath: '/product-contents/$id/edit'
+      preLoaderRoute: typeof AuthenticatedProductContentsIdEditLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
   }
@@ -651,6 +1029,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteLazyRoute: typeof AuthenticatedSettingsRouteLazyRouteWithChildren
   AuthenticatedBrandsCreateLazyRoute: typeof AuthenticatedBrandsCreateLazyRoute
   AuthenticatedCustomersCustomerCrudLazyRoute: typeof AuthenticatedCustomersCustomerCrudLazyRoute
+  AuthenticatedProductCategoryFirstsCreateLazyRoute: typeof AuthenticatedProductCategoryFirstsCreateLazyRoute
+  AuthenticatedProductCategorySecondsCreateLazyRoute: typeof AuthenticatedProductCategorySecondsCreateLazyRoute
+  AuthenticatedProductContentDetailsCreateLazyRoute: typeof AuthenticatedProductContentDetailsCreateLazyRoute
+  AuthenticatedProductContentDisplaysCreateLazyRoute: typeof AuthenticatedProductContentDisplaysCreateLazyRoute
+  AuthenticatedProductContentFeaturesCreateLazyRoute: typeof AuthenticatedProductContentFeaturesCreateLazyRoute
+  AuthenticatedProductContentsCreateLazyRoute: typeof AuthenticatedProductContentsCreateLazyRoute
   AuthenticatedAppsIndexLazyRoute: typeof AuthenticatedAppsIndexLazyRoute
   AuthenticatedBrandsIndexLazyRoute: typeof AuthenticatedBrandsIndexLazyRoute
   AuthenticatedChatsIndexLazyRoute: typeof AuthenticatedChatsIndexLazyRoute
@@ -658,10 +1042,22 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardsIndexLazyRoute: typeof AuthenticatedDashboardsIndexLazyRoute
   AuthenticatedHelpCenterIndexLazyRoute: typeof AuthenticatedHelpCenterIndexLazyRoute
   AuthenticatedProductCartsIndexLazyRoute: typeof AuthenticatedProductCartsIndexLazyRoute
+  AuthenticatedProductCategoryFirstsIndexLazyRoute: typeof AuthenticatedProductCategoryFirstsIndexLazyRoute
+  AuthenticatedProductCategorySecondsIndexLazyRoute: typeof AuthenticatedProductCategorySecondsIndexLazyRoute
+  AuthenticatedProductContentDetailsIndexLazyRoute: typeof AuthenticatedProductContentDetailsIndexLazyRoute
+  AuthenticatedProductContentDisplaysIndexLazyRoute: typeof AuthenticatedProductContentDisplaysIndexLazyRoute
+  AuthenticatedProductContentFeaturesIndexLazyRoute: typeof AuthenticatedProductContentFeaturesIndexLazyRoute
+  AuthenticatedProductContentsIndexLazyRoute: typeof AuthenticatedProductContentsIndexLazyRoute
   AuthenticatedProductsIndexLazyRoute: typeof AuthenticatedProductsIndexLazyRoute
   AuthenticatedTasksIndexLazyRoute: typeof AuthenticatedTasksIndexLazyRoute
   AuthenticatedUsersIndexLazyRoute: typeof AuthenticatedUsersIndexLazyRoute
   AuthenticatedBrandsIdEditLazyRoute: typeof AuthenticatedBrandsIdEditLazyRoute
+  AuthenticatedProductCategoryFirstsIdEditLazyRoute: typeof AuthenticatedProductCategoryFirstsIdEditLazyRoute
+  AuthenticatedProductCategorySecondsIdEditLazyRoute: typeof AuthenticatedProductCategorySecondsIdEditLazyRoute
+  AuthenticatedProductContentDetailsIdEditLazyRoute: typeof AuthenticatedProductContentDetailsIdEditLazyRoute
+  AuthenticatedProductContentDisplaysIdEditLazyRoute: typeof AuthenticatedProductContentDisplaysIdEditLazyRoute
+  AuthenticatedProductContentFeaturesIdEditLazyRoute: typeof AuthenticatedProductContentFeaturesIdEditLazyRoute
+  AuthenticatedProductContentsIdEditLazyRoute: typeof AuthenticatedProductContentsIdEditLazyRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -670,6 +1066,18 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBrandsCreateLazyRoute: AuthenticatedBrandsCreateLazyRoute,
   AuthenticatedCustomersCustomerCrudLazyRoute:
     AuthenticatedCustomersCustomerCrudLazyRoute,
+  AuthenticatedProductCategoryFirstsCreateLazyRoute:
+    AuthenticatedProductCategoryFirstsCreateLazyRoute,
+  AuthenticatedProductCategorySecondsCreateLazyRoute:
+    AuthenticatedProductCategorySecondsCreateLazyRoute,
+  AuthenticatedProductContentDetailsCreateLazyRoute:
+    AuthenticatedProductContentDetailsCreateLazyRoute,
+  AuthenticatedProductContentDisplaysCreateLazyRoute:
+    AuthenticatedProductContentDisplaysCreateLazyRoute,
+  AuthenticatedProductContentFeaturesCreateLazyRoute:
+    AuthenticatedProductContentFeaturesCreateLazyRoute,
+  AuthenticatedProductContentsCreateLazyRoute:
+    AuthenticatedProductContentsCreateLazyRoute,
   AuthenticatedAppsIndexLazyRoute: AuthenticatedAppsIndexLazyRoute,
   AuthenticatedBrandsIndexLazyRoute: AuthenticatedBrandsIndexLazyRoute,
   AuthenticatedChatsIndexLazyRoute: AuthenticatedChatsIndexLazyRoute,
@@ -678,10 +1086,34 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHelpCenterIndexLazyRoute: AuthenticatedHelpCenterIndexLazyRoute,
   AuthenticatedProductCartsIndexLazyRoute:
     AuthenticatedProductCartsIndexLazyRoute,
+  AuthenticatedProductCategoryFirstsIndexLazyRoute:
+    AuthenticatedProductCategoryFirstsIndexLazyRoute,
+  AuthenticatedProductCategorySecondsIndexLazyRoute:
+    AuthenticatedProductCategorySecondsIndexLazyRoute,
+  AuthenticatedProductContentDetailsIndexLazyRoute:
+    AuthenticatedProductContentDetailsIndexLazyRoute,
+  AuthenticatedProductContentDisplaysIndexLazyRoute:
+    AuthenticatedProductContentDisplaysIndexLazyRoute,
+  AuthenticatedProductContentFeaturesIndexLazyRoute:
+    AuthenticatedProductContentFeaturesIndexLazyRoute,
+  AuthenticatedProductContentsIndexLazyRoute:
+    AuthenticatedProductContentsIndexLazyRoute,
   AuthenticatedProductsIndexLazyRoute: AuthenticatedProductsIndexLazyRoute,
   AuthenticatedTasksIndexLazyRoute: AuthenticatedTasksIndexLazyRoute,
   AuthenticatedUsersIndexLazyRoute: AuthenticatedUsersIndexLazyRoute,
   AuthenticatedBrandsIdEditLazyRoute: AuthenticatedBrandsIdEditLazyRoute,
+  AuthenticatedProductCategoryFirstsIdEditLazyRoute:
+    AuthenticatedProductCategoryFirstsIdEditLazyRoute,
+  AuthenticatedProductCategorySecondsIdEditLazyRoute:
+    AuthenticatedProductCategorySecondsIdEditLazyRoute,
+  AuthenticatedProductContentDetailsIdEditLazyRoute:
+    AuthenticatedProductContentDetailsIdEditLazyRoute,
+  AuthenticatedProductContentDisplaysIdEditLazyRoute:
+    AuthenticatedProductContentDisplaysIdEditLazyRoute,
+  AuthenticatedProductContentFeaturesIdEditLazyRoute:
+    AuthenticatedProductContentFeaturesIdEditLazyRoute,
+  AuthenticatedProductContentsIdEditLazyRoute:
+    AuthenticatedProductContentsIdEditLazyRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -704,6 +1136,12 @@ export interface FileRoutesByFullPath {
   '/': typeof authIndexRoute
   '/brands/create': typeof AuthenticatedBrandsCreateLazyRoute
   '/customers/customerCrud': typeof AuthenticatedCustomersCustomerCrudLazyRoute
+  '/product-category-firsts/create': typeof AuthenticatedProductCategoryFirstsCreateLazyRoute
+  '/product-category-seconds/create': typeof AuthenticatedProductCategorySecondsCreateLazyRoute
+  '/product-content-details/create': typeof AuthenticatedProductContentDetailsCreateLazyRoute
+  '/product-content-displays/create': typeof AuthenticatedProductContentDisplaysCreateLazyRoute
+  '/product-content-features/create': typeof AuthenticatedProductContentFeaturesCreateLazyRoute
+  '/product-contents/create': typeof AuthenticatedProductContentsCreateLazyRoute
   '/settings/account': typeof AuthenticatedSettingsAccountLazyRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceLazyRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayLazyRoute
@@ -715,11 +1153,23 @@ export interface FileRoutesByFullPath {
   '/dashboards': typeof AuthenticatedDashboardsIndexLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/product-carts': typeof AuthenticatedProductCartsIndexLazyRoute
+  '/product-category-firsts': typeof AuthenticatedProductCategoryFirstsIndexLazyRoute
+  '/product-category-seconds': typeof AuthenticatedProductCategorySecondsIndexLazyRoute
+  '/product-content-details': typeof AuthenticatedProductContentDetailsIndexLazyRoute
+  '/product-content-displays': typeof AuthenticatedProductContentDisplaysIndexLazyRoute
+  '/product-content-features': typeof AuthenticatedProductContentFeaturesIndexLazyRoute
+  '/product-contents': typeof AuthenticatedProductContentsIndexLazyRoute
   '/products': typeof AuthenticatedProductsIndexLazyRoute
   '/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/tasks': typeof AuthenticatedTasksIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
   '/brands/$id/edit': typeof AuthenticatedBrandsIdEditLazyRoute
+  '/product-category-firsts/$id/edit': typeof AuthenticatedProductCategoryFirstsIdEditLazyRoute
+  '/product-category-seconds/$id/edit': typeof AuthenticatedProductCategorySecondsIdEditLazyRoute
+  '/product-content-details/$id/edit': typeof AuthenticatedProductContentDetailsIdEditLazyRoute
+  '/product-content-displays/$id/edit': typeof AuthenticatedProductContentDisplaysIdEditLazyRoute
+  '/product-content-features/$id/edit': typeof AuthenticatedProductContentFeaturesIdEditLazyRoute
+  '/product-contents/$id/edit': typeof AuthenticatedProductContentsIdEditLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -738,6 +1188,12 @@ export interface FileRoutesByTo {
   '/': typeof authIndexRoute
   '/brands/create': typeof AuthenticatedBrandsCreateLazyRoute
   '/customers/customerCrud': typeof AuthenticatedCustomersCustomerCrudLazyRoute
+  '/product-category-firsts/create': typeof AuthenticatedProductCategoryFirstsCreateLazyRoute
+  '/product-category-seconds/create': typeof AuthenticatedProductCategorySecondsCreateLazyRoute
+  '/product-content-details/create': typeof AuthenticatedProductContentDetailsCreateLazyRoute
+  '/product-content-displays/create': typeof AuthenticatedProductContentDisplaysCreateLazyRoute
+  '/product-content-features/create': typeof AuthenticatedProductContentFeaturesCreateLazyRoute
+  '/product-contents/create': typeof AuthenticatedProductContentsCreateLazyRoute
   '/settings/account': typeof AuthenticatedSettingsAccountLazyRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceLazyRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayLazyRoute
@@ -749,11 +1205,23 @@ export interface FileRoutesByTo {
   '/dashboards': typeof AuthenticatedDashboardsIndexLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/product-carts': typeof AuthenticatedProductCartsIndexLazyRoute
+  '/product-category-firsts': typeof AuthenticatedProductCategoryFirstsIndexLazyRoute
+  '/product-category-seconds': typeof AuthenticatedProductCategorySecondsIndexLazyRoute
+  '/product-content-details': typeof AuthenticatedProductContentDetailsIndexLazyRoute
+  '/product-content-displays': typeof AuthenticatedProductContentDisplaysIndexLazyRoute
+  '/product-content-features': typeof AuthenticatedProductContentFeaturesIndexLazyRoute
+  '/product-contents': typeof AuthenticatedProductContentsIndexLazyRoute
   '/products': typeof AuthenticatedProductsIndexLazyRoute
   '/settings': typeof AuthenticatedSettingsIndexLazyRoute
   '/tasks': typeof AuthenticatedTasksIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
   '/brands/$id/edit': typeof AuthenticatedBrandsIdEditLazyRoute
+  '/product-category-firsts/$id/edit': typeof AuthenticatedProductCategoryFirstsIdEditLazyRoute
+  '/product-category-seconds/$id/edit': typeof AuthenticatedProductCategorySecondsIdEditLazyRoute
+  '/product-content-details/$id/edit': typeof AuthenticatedProductContentDetailsIdEditLazyRoute
+  '/product-content-displays/$id/edit': typeof AuthenticatedProductContentDisplaysIdEditLazyRoute
+  '/product-content-features/$id/edit': typeof AuthenticatedProductContentFeaturesIdEditLazyRoute
+  '/product-contents/$id/edit': typeof AuthenticatedProductContentsIdEditLazyRoute
 }
 
 export interface FileRoutesById {
@@ -775,6 +1243,12 @@ export interface FileRoutesById {
   '/(auth)/': typeof authIndexRoute
   '/_authenticated/brands/create': typeof AuthenticatedBrandsCreateLazyRoute
   '/_authenticated/customers/customerCrud': typeof AuthenticatedCustomersCustomerCrudLazyRoute
+  '/_authenticated/product-category-firsts/create': typeof AuthenticatedProductCategoryFirstsCreateLazyRoute
+  '/_authenticated/product-category-seconds/create': typeof AuthenticatedProductCategorySecondsCreateLazyRoute
+  '/_authenticated/product-content-details/create': typeof AuthenticatedProductContentDetailsCreateLazyRoute
+  '/_authenticated/product-content-displays/create': typeof AuthenticatedProductContentDisplaysCreateLazyRoute
+  '/_authenticated/product-content-features/create': typeof AuthenticatedProductContentFeaturesCreateLazyRoute
+  '/_authenticated/product-contents/create': typeof AuthenticatedProductContentsCreateLazyRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountLazyRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceLazyRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayLazyRoute
@@ -786,11 +1260,23 @@ export interface FileRoutesById {
   '/_authenticated/dashboards/': typeof AuthenticatedDashboardsIndexLazyRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/_authenticated/product-carts/': typeof AuthenticatedProductCartsIndexLazyRoute
+  '/_authenticated/product-category-firsts/': typeof AuthenticatedProductCategoryFirstsIndexLazyRoute
+  '/_authenticated/product-category-seconds/': typeof AuthenticatedProductCategorySecondsIndexLazyRoute
+  '/_authenticated/product-content-details/': typeof AuthenticatedProductContentDetailsIndexLazyRoute
+  '/_authenticated/product-content-displays/': typeof AuthenticatedProductContentDisplaysIndexLazyRoute
+  '/_authenticated/product-content-features/': typeof AuthenticatedProductContentFeaturesIndexLazyRoute
+  '/_authenticated/product-contents/': typeof AuthenticatedProductContentsIndexLazyRoute
   '/_authenticated/products/': typeof AuthenticatedProductsIndexLazyRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexLazyRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexLazyRoute
   '/_authenticated/brands/$id/edit': typeof AuthenticatedBrandsIdEditLazyRoute
+  '/_authenticated/product-category-firsts/$id/edit': typeof AuthenticatedProductCategoryFirstsIdEditLazyRoute
+  '/_authenticated/product-category-seconds/$id/edit': typeof AuthenticatedProductCategorySecondsIdEditLazyRoute
+  '/_authenticated/product-content-details/$id/edit': typeof AuthenticatedProductContentDetailsIdEditLazyRoute
+  '/_authenticated/product-content-displays/$id/edit': typeof AuthenticatedProductContentDisplaysIdEditLazyRoute
+  '/_authenticated/product-content-features/$id/edit': typeof AuthenticatedProductContentFeaturesIdEditLazyRoute
+  '/_authenticated/product-contents/$id/edit': typeof AuthenticatedProductContentsIdEditLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -812,6 +1298,12 @@ export interface FileRouteTypes {
     | '/'
     | '/brands/create'
     | '/customers/customerCrud'
+    | '/product-category-firsts/create'
+    | '/product-category-seconds/create'
+    | '/product-content-details/create'
+    | '/product-content-displays/create'
+    | '/product-content-features/create'
+    | '/product-contents/create'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/display'
@@ -823,11 +1315,23 @@ export interface FileRouteTypes {
     | '/dashboards'
     | '/help-center'
     | '/product-carts'
+    | '/product-category-firsts'
+    | '/product-category-seconds'
+    | '/product-content-details'
+    | '/product-content-displays'
+    | '/product-content-features'
+    | '/product-contents'
     | '/products'
     | '/settings/'
     | '/tasks'
     | '/users'
     | '/brands/$id/edit'
+    | '/product-category-firsts/$id/edit'
+    | '/product-category-seconds/$id/edit'
+    | '/product-content-details/$id/edit'
+    | '/product-content-displays/$id/edit'
+    | '/product-content-features/$id/edit'
+    | '/product-contents/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
@@ -845,6 +1349,12 @@ export interface FileRouteTypes {
     | '/'
     | '/brands/create'
     | '/customers/customerCrud'
+    | '/product-category-firsts/create'
+    | '/product-category-seconds/create'
+    | '/product-content-details/create'
+    | '/product-content-displays/create'
+    | '/product-content-features/create'
+    | '/product-contents/create'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/display'
@@ -856,11 +1366,23 @@ export interface FileRouteTypes {
     | '/dashboards'
     | '/help-center'
     | '/product-carts'
+    | '/product-category-firsts'
+    | '/product-category-seconds'
+    | '/product-content-details'
+    | '/product-content-displays'
+    | '/product-content-features'
+    | '/product-contents'
     | '/products'
     | '/settings'
     | '/tasks'
     | '/users'
     | '/brands/$id/edit'
+    | '/product-category-firsts/$id/edit'
+    | '/product-category-seconds/$id/edit'
+    | '/product-content-details/$id/edit'
+    | '/product-content-displays/$id/edit'
+    | '/product-content-features/$id/edit'
+    | '/product-contents/$id/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -880,6 +1402,12 @@ export interface FileRouteTypes {
     | '/(auth)/'
     | '/_authenticated/brands/create'
     | '/_authenticated/customers/customerCrud'
+    | '/_authenticated/product-category-firsts/create'
+    | '/_authenticated/product-category-seconds/create'
+    | '/_authenticated/product-content-details/create'
+    | '/_authenticated/product-content-displays/create'
+    | '/_authenticated/product-content-features/create'
+    | '/_authenticated/product-contents/create'
     | '/_authenticated/settings/account'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/display'
@@ -891,11 +1419,23 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboards/'
     | '/_authenticated/help-center/'
     | '/_authenticated/product-carts/'
+    | '/_authenticated/product-category-firsts/'
+    | '/_authenticated/product-category-seconds/'
+    | '/_authenticated/product-content-details/'
+    | '/_authenticated/product-content-displays/'
+    | '/_authenticated/product-content-features/'
+    | '/_authenticated/product-contents/'
     | '/_authenticated/products/'
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
     | '/_authenticated/users/'
     | '/_authenticated/brands/$id/edit'
+    | '/_authenticated/product-category-firsts/$id/edit'
+    | '/_authenticated/product-category-seconds/$id/edit'
+    | '/_authenticated/product-content-details/$id/edit'
+    | '/_authenticated/product-content-displays/$id/edit'
+    | '/_authenticated/product-content-features/$id/edit'
+    | '/_authenticated/product-contents/$id/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -965,6 +1505,12 @@ export const routeTree = rootRoute
         "/_authenticated/settings",
         "/_authenticated/brands/create",
         "/_authenticated/customers/customerCrud",
+        "/_authenticated/product-category-firsts/create",
+        "/_authenticated/product-category-seconds/create",
+        "/_authenticated/product-content-details/create",
+        "/_authenticated/product-content-displays/create",
+        "/_authenticated/product-content-features/create",
+        "/_authenticated/product-contents/create",
         "/_authenticated/apps/",
         "/_authenticated/brands/",
         "/_authenticated/chats/",
@@ -972,10 +1518,22 @@ export const routeTree = rootRoute
         "/_authenticated/dashboards/",
         "/_authenticated/help-center/",
         "/_authenticated/product-carts/",
+        "/_authenticated/product-category-firsts/",
+        "/_authenticated/product-category-seconds/",
+        "/_authenticated/product-content-details/",
+        "/_authenticated/product-content-displays/",
+        "/_authenticated/product-content-features/",
+        "/_authenticated/product-contents/",
         "/_authenticated/products/",
         "/_authenticated/tasks/",
         "/_authenticated/users/",
-        "/_authenticated/brands/$id/edit"
+        "/_authenticated/brands/$id/edit",
+        "/_authenticated/product-category-firsts/$id/edit",
+        "/_authenticated/product-category-seconds/$id/edit",
+        "/_authenticated/product-content-details/$id/edit",
+        "/_authenticated/product-content-displays/$id/edit",
+        "/_authenticated/product-content-features/$id/edit",
+        "/_authenticated/product-contents/$id/edit"
       ]
     },
     "/(auth)/500": {
@@ -1036,6 +1594,30 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/customers/customerCrud.lazy.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/product-category-firsts/create": {
+      "filePath": "_authenticated/product-category-firsts/create.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-category-seconds/create": {
+      "filePath": "_authenticated/product-category-seconds/create.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-details/create": {
+      "filePath": "_authenticated/product-content-details/create.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-displays/create": {
+      "filePath": "_authenticated/product-content-displays/create.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-features/create": {
+      "filePath": "_authenticated/product-content-features/create.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-contents/create": {
+      "filePath": "_authenticated/product-contents/create.lazy.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/settings/account": {
       "filePath": "_authenticated/settings/account.lazy.tsx",
       "parent": "/_authenticated/settings"
@@ -1080,6 +1662,30 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/product-carts/index.lazy.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/product-category-firsts/": {
+      "filePath": "_authenticated/product-category-firsts/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-category-seconds/": {
+      "filePath": "_authenticated/product-category-seconds/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-details/": {
+      "filePath": "_authenticated/product-content-details/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-displays/": {
+      "filePath": "_authenticated/product-content-displays/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-features/": {
+      "filePath": "_authenticated/product-content-features/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-contents/": {
+      "filePath": "_authenticated/product-contents/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/products/": {
       "filePath": "_authenticated/products/index.lazy.tsx",
       "parent": "/_authenticated"
@@ -1098,6 +1704,30 @@ export const routeTree = rootRoute
     },
     "/_authenticated/brands/$id/edit": {
       "filePath": "_authenticated/brands/$id/edit.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-category-firsts/$id/edit": {
+      "filePath": "_authenticated/product-category-firsts/$id/edit.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-category-seconds/$id/edit": {
+      "filePath": "_authenticated/product-category-seconds/$id/edit.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-details/$id/edit": {
+      "filePath": "_authenticated/product-content-details/$id/edit.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-displays/$id/edit": {
+      "filePath": "_authenticated/product-content-displays/$id/edit.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-content-features/$id/edit": {
+      "filePath": "_authenticated/product-content-features/$id/edit.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/product-contents/$id/edit": {
+      "filePath": "_authenticated/product-contents/$id/edit.lazy.tsx",
       "parent": "/_authenticated"
     }
   }
