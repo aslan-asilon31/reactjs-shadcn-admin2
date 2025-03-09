@@ -1,8 +1,7 @@
 // store.js  
-import { create } from 'zustand';
-import Swal from 'sweetalert2';
 import API from '@/api/MainApi';
-import { z } from 'zod'
+import Swal from 'sweetalert2';
+import { create } from 'zustand';
 
 interface ProductCategoryFirst {
   id: number;
@@ -46,8 +45,13 @@ const productCategoryFirstStore = create<ProductCategoryFirstStore>((set) => ({
         });
         set({ productcategoryfirsts: response.data.data.data, loading: false });  
         // loadingAlert.close();
+        console.log(response.data.data.data);
+        alert(response.data.data.data);
+
     } catch (error) {  
-      set({ error: error.message, loading: false });  
+      set({ error: error.message, loading: false }); 
+      alert({ error: error.message, loading: false });  
+
 
       // loadingAlert.close();
       Swal.fire({
