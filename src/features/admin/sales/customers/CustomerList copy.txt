@@ -1,26 +1,23 @@
-import useBrandStore from '@/stores/brandStore';
-import React, { useEffect,useState  } from 'react';
-import { Button } from "@/components/ui/button";
+import  { useEffect, useState } from 'react';
+import { Header } from '@/components/layout/header';
+import { Main } from '@/components/layout/main';
+import { ProfileDropdown } from '@/components/profile-dropdown';
+import { ThemeSwitch } from '@/components/theme-switch';
+import useCustomerStore from '@/stores/customerStore';
+import CustomerTable from '@/features/admin/sales/customers/components/customer-table'
+
+type CustomerSearchSortOptions = 'newest' | 'oldest' | 'price';
 
 
-type BrandSearchSortOptions = 'newest' | 'oldest' | 'price';
-
-type BrandSearch = {
-  page: number;
-  filter: string;
-  createdBy: string;
-  sort: BrandSearchSortOptions;
-};
-
-
-
-const BrandFilter = ({ searchBrand, setSearchBrand, createdBy, setCreatedBy }) => {
-
-  const { fetchAdvanceSearch,setSelectedBrandId  } = useBrandStore() as { brands: Brand; error: string | null };
+const CustomerList = () => {
+  const { customers, fetchCustomers,fetchAdvanceSearch,setSelectedCustomerId } = useCustomerStore() as { customers: Customer; error: string | null };
+  const [searchCustomer, setSearchCustomer] = useState('');
+  const [createdBy, setCreatedBy] = useState('');
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState<BrandSearchSortOptions>('newest');
+  const [sort, setSort] = useState<CustomerSearchSortOptions>('newest');
+  const [filter, setFilter] = useState('');
 
- useEffect(() => {
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const filterParam = params.get('filter');
     const createdByParam = params.get('created_by');
@@ -28,7 +25,7 @@ const BrandFilter = ({ searchBrand, setSearchBrand, createdBy, setCreatedBy }) =
     const sortParam = params.get('sort');
 
     // Setel state berdasarkan parameter URL
-    if (filterParam) setSearchBrand(filterParam);
+    if (filterParam) setSearchCustomer(filterParam);
     if (createdByParam) setCreatedBy(createdByParam);
     if (pageParam) setPage(Number(pageParam));
     if (sortParam) setSort(sortParam);
@@ -37,12 +34,11 @@ const BrandFilter = ({ searchBrand, setSearchBrand, createdBy, setCreatedBy }) =
     fetchAdvanceSearch(filterParam, createdByParam, Number(pageParam), sortParam);
   }, []);
 
-
   // Fungsi untuk menangani pencarian
   const handleSearch = () => {
     // Memperbarui URL dengan parameter baru
     const params = new URLSearchParams();
-    params.set('filter', searchBrand);
+    params.set('filter', searchCustomer);
     params.set('created_by', createdBy);
     params.set('page', page);
     params.set('sort', sort);
@@ -51,7 +47,7 @@ const BrandFilter = ({ searchBrand, setSearchBrand, createdBy, setCreatedBy }) =
     window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
 
     // Panggil fungsi pencarian
-    fetchAdvanceSearch(searchBrand, createdBy, page, sort);
+    fetchAdvanceSearch(searchCustomer, createdBy, page, sort);
   };
 
 
@@ -65,7 +61,7 @@ const BrandFilter = ({ searchBrand, setSearchBrand, createdBy, setCreatedBy }) =
       const sortParam = params.get('');
   
       // Setel state berdasarkan parameter URL
-      if (filterParam) setSearchBrand(filterParam);
+      if (filterParam) setSearchCustomer(filterParam);
       if (createdByParam) setCreatedBy(createdByParam);
       if (pageParam) setPage(Number(pageParam));
       if (sortParam) setSort(sortParam);
@@ -73,38 +69,26 @@ const BrandFilter = ({ searchBrand, setSearchBrand, createdBy, setCreatedBy }) =
       // Panggil fungsi pencarian dengan parameter yang diambil dari URL
       fetchAdvanceSearch(filterParam, createdByParam, Number(pageParam), sortParam);
       // Mengupdate URL untuk menghapus query parameters
-      window.history.replaceState({}, '', '/brands');
+      window.history.replaceState({}, '', '/customers');
     };
 
 
+    const handleEdit = async (customerId: any) => {
+      setSelectedCustomerId(customerId);
+      window.location.href = `/customers/${customerId}/edit/`;
+    };
+
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search brand..."
-        value={searchBrand}
-        onChange={(e) => setSearchBrand(e.target.value)}
-        className="border border-gray-300 rounded-md p-2"
-      />
-      <input
-        type="text"
-        placeholder="Created by..."
-        value={createdBy}
-        onChange={(e) => setCreatedBy(e.target.value)}
-        className="border border-gray-300 rounded-md p-2"
-      />
-        <div>
-            <label>Sort by:</label>
-            <select value={sort} onChange={(e) => setSort(e.target.value)}>
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-            </select>
-        </div>
-     <Button onClick={handleSearch}>Advanced Search</Button>
-      
-      <Button onClick={clearFilters}>Clear Filters</Button>
+      <Header>
+        <ProfileDropdown />
+        <ThemeSwitch />
+      </Header>
+      <Main>
+        <CustomerTable customers={customers} />
+      </Main>
     </div>
   );
 };
 
-export default BrandFilter;
+export default CustomerList;

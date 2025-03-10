@@ -131,4 +131,3 @@ const CustomerTable = ({customers}) => {
   );
 };
 
-export default CustomerTable;

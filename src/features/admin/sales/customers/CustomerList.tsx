@@ -4,7 +4,7 @@ import { Main } from '@/components/layout/main';
 import { ProfileDropdown } from '@/components/profile-dropdown';
 import { ThemeSwitch } from '@/components/theme-switch';
 import useCustomerStore from '@/stores/customerStore';
-import CustomerTable from '@/features/admin/sales/customers/components/CustomerTable'
+import CustomerTable from '@/features/admin/sales/customers/components/customer-table'
 
 type CustomerSearchSortOptions = 'newest' | 'oldest' | 'price';
 
@@ -16,7 +16,8 @@ const CustomerList = () => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<CustomerSearchSortOptions>('newest');
   const [filter, setFilter] = useState('');
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', description: '' });
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const filterParam = params.get('filter');
@@ -78,6 +79,19 @@ const CustomerList = () => {
       window.location.href = `/customers/${customerId}/edit/`;
     };
 
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log('Form Data Submitted:', formData);
+      setIsModalOpen(false);
+      setFormData({ name: '', description: '' }); // Reset form
+    };
+
+
   return (
     <div>
       <Header>
@@ -85,7 +99,9 @@ const CustomerList = () => {
         <ThemeSwitch />
       </Header>
       <Main>
-        <CustomerTable customers={customers} />
+
+        <CustomerTable customers={customers}/>
+
       </Main>
     </div>
   );

@@ -3,10 +3,19 @@ import { create } from 'zustand';
 import Swal from 'sweetalert2';
 import API from '@/api/MainApi';
 import { z } from 'zod'
+import axios from 'axios';
 
 interface Customer {
-  id: number;
-  name: string;
+  id: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+  created_by: string;
+  updated_by: string;
+  is_activated: number;
+  created_at: Date;
+  updated_at: Date;
 }
 
 interface CustomerStore {
@@ -73,7 +82,7 @@ const customerStore = create<CustomerStore>((set) => ({
   fetchAdvanceSearch: async (filter: string, created_by: string, page: number, sort: string) => {
     try {
 
-      const response = await API.get('http://127.0.0.1:8000/api/customer-advanceds/', {
+      const response = await API.get('http://127.0.0.1:8000/api/customer-advanced/', {
         params: {
           filter: filter,
           created_by: created_by,
@@ -87,109 +96,93 @@ const customerStore = create<CustomerStore>((set) => ({
       Swal.fire('Error', 'Failed to fetch customers with search parameters', 'error');
     }
   },
+
   
-
-  storeCustomer: async (name: string , slug: string) => {
-
+  storeCustomer: async (data: Customer) => {
+    // Menampilkan loading alert
     const loadingAlert = Swal.fire({
-      title: 'Updating...',
-      text: 'Please wait while we update the customer.',
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
-
-      try {
-
-          // Mengirim permintaan POST menggunakan Fetch API
-          let resp = await fetch(`http://127.0.0.1:8000/api/customers/store`, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ name, slug }), // Mengubah objek menjadi string JSON
-          });
-
-          // Memeriksa apakah permintaan berhasil
-          if (resp.ok) { // Menggunakan resp.ok untuk memeriksa status
-              const data = await resp.json(); // Mengambil data dari respons
-              set((state) => ({ customers: [...state.customers, data] })); // Menambahkan produk ke state
-              loadingAlert.close();
-
-              Swal.fire({
-                title: 'Success!',
-                text: 'customer updated successfully.',
-                icon: 'success',
-                confirmButtonText: 'OK',
-              });
-
-          } else {
-              // Menangani kesalahan jika permintaan tidak berhasil
-              const errorData = await resp.json();
-          }
-      } catch (error) {
-          console.error("Error:", error);
-          loadingAlert.close();
-          Swal.fire({
-            title: 'Error!',
-            text: 'Failed to update customer. Please try again.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-          });
-      }
-  },
-
-  updateCustomer: async (name: any,slug: any, id: number) => {
-    const loadingAlert = Swal.fire({
-      title: 'Updating...',
-      text: 'Please wait while we update the customer.',
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
-    try {
-      const response = await API.post(`http://127.0.0.1:8000/api/customers/update/${id}`,{
-        name,
-        slug
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
+        title: 'Adding...',
+        text: 'Please wait while we add the customer.',
+        allowOutsideClick: false,
+        onBeforeOpen: () => {
+            Swal.showLoading();
         },
-      });
-      
-      if (!response) {
-        throw new Error('Failed to update customer');
-      }
+    });
 
-      const data = await response.json();
-      // Update state or handle response as needed
-      set((state) => ({
-        customers: state.customers.map((customer) => (customer.id === id ? { ...customer, name, slug,id } : customer)),
-      }));
+    // Mengirim permintaan POST menggunakan Axios
+    alert(data);
 
-      loadingAlert.close();
+    axios.post('http://127.0.0.1:8000/api/customers/store', data)
+        .then((resp) => {
+            // Memeriksa apakah permintaan berhasil
+            if (resp.status === 200) {
+                // Menampilkan notifikasi sukses
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Customer added successfully.',
+                    icon: 'success',
+                });
+            } else {
+                // Menampilkan notifikasi error
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Failed to add customer.',
+                    icon: 'error',
+                });
+            }
+        })
+        .catch((error) => {
+            // Menampilkan notifikasi error jika terjadi kesalahan
+            Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while adding the customer.',
+                icon: 'error',
+            });
+        })
+        .finally(() => {
+            // Menutup loading alert
+            Swal.close();
+        });
+},
 
-      Swal.fire({
-        title: 'Success!',
-        text: 'customer updated successfully.',
-        icon: 'success',
-        confirmButtonText: 'OK',
-      });
-      
-    } catch (error) {
-      set({ error: error.message });
-      loadingAlert.close();
-      Swal.fire({
-        title: 'Error!',
-        text: 'Failed to update customer. Please try again.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
-    }
+  updateCustomer: async (id: string, data: Customer) => {
+    alert('halooo update');
+
+    // Menampilkan loading alert
+    const loadingAlert = Swal.fire({
+        title: 'Updating...',
+        text: 'Please wait while we update the customer.',
+        allowOutsideClick: false,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    // Mengirim permintaan POST menggunakan Axios
+    await API.post(`http://127.0.0.1:8000/api/customers/update/${id}`, data, {
+        headers: {
+            'Content-Type': 'application/json', // Pastikan header ini benar
+        },
+    })
+    .then((response) => {
+        // Menutup loading alert
+        Swal.close();
+
+        // Memeriksa apakah permintaan berhasil
+        if (response.status === 200) {
+            Swal.fire('Success', 'Customer updated successfully!', 'success');
+        } else {
+            Swal.fire('Error', 'Failed to update customer.', 'error');
+        }
+    })
+    .catch((error) => {
+        // Menutup loading alert
+        Swal.close();
+
+        // Menampilkan pesan kesalahan
+        Swal.fire('Error', 'An error occurred while updating the customer.', 'error');
+        console.error('Error updating customer:', error);
+    });
   },
 
   deleteCustomer: async (id: number) => {

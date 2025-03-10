@@ -1,4 +1,4 @@
-import ProductContentDisplays from '@/features/admin/contents/product-contents/ProductContentDisplayList'
+import ProductContentDisplays from '@/features/admin/contents/product-content-displays/ProductContentDisplayList'
 import { createLazyFileRoute } from '@tanstack/react-router'
 // import { createRoute } from '@tanstack/react-router'
 
