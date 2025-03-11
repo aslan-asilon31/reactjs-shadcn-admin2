@@ -37,15 +37,7 @@ const customerStore = create<CustomerStore>((set) => ({
 
 
   fetchCustomers: async () => {  
-    // const loadingAlert = Swal.fire({
-    //   title: 'loading...',
-    //   text: 'Please wait while we load data.',
-    //   allowOutsideClick: false,
-    //   showConfirmButton: false,
-    //   onBeforeOpen: () => {
-    //     Swal.showLoading();
-    //   },
-    // });
+
     
     try {  
         const response = await API.get('http://localhost:8000/api/customers', {
@@ -143,7 +135,7 @@ const customerStore = create<CustomerStore>((set) => ({
             // Menutup loading alert
             Swal.close();
         });
-},
+  },
 
   updateCustomer: async (id: string, data: Customer) => {
     alert('halooo update');
